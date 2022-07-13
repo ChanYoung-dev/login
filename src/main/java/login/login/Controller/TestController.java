@@ -25,14 +25,14 @@ public class TestController {
 	@GetMapping("/test")
 	@ResponseBody
 	public String test() {
-		userInfoService.save();
+		userAccountService.register("emrhssla","em89138913", "chanyoung", "emrhssla@gmail.com");
 		return "success";
 	}
 	
 	@GetMapping("/test2")
 	@ResponseBody
 	public String test2() {
-		userAccountService.save();
+		//userAccountService.save();
 		return "success";
 	}
 	

@@ -17,10 +17,15 @@ import lombok.RequiredArgsConstructor;
 public class UserAccountService {
 	
 	private final UserAccountRepository userAccountRepository;
-	
+	private final UserInfoRepository userInfoRepository;
+
 	@Transactional
-	public void save() {
-		userAccountRepository.save(new UserAccount("chan", "123456", "Y"));
+	public void register(String userId, String userPassword, String name, String mail) {
+		UserInfo userInfo = UserInfo.createUserInfo(userId, name, mail);
+		UserAccount userAccount = UserAccount.createUserAccount(userPassword, userInfo);
+		userInfoRepository.save(userInfo);
+		userAccountRepository.save(userAccount);
 	}
+
 	
 }

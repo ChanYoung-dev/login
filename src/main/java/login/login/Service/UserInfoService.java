@@ -15,10 +15,10 @@ import lombok.RequiredArgsConstructor;
 public class UserInfoService {
 	
 	private final UserInfoRepository userInfoRepository;
-	
+	/*
 	@Transactional
 	public void save() {
 		userInfoRepository.save(new UserInfo("chan", "123456", "emrhssla@gmail.com"));
 	}
-	
+	*/
 }

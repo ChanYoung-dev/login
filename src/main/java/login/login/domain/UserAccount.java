@@ -1,17 +1,15 @@
 package login.login.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import lombok.Getter;
+import lombok.Setter;
+
+import java.time.LocalDateTime;
 
 @Table(name = "tbl_user_account")
 @Getter
+@Setter
 @Entity
 public class UserAccount {
 	
@@ -19,19 +17,29 @@ public class UserAccount {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@OneToOne(targetEntity = UserInfo.class, mappedBy = "userId")
-	private String account_user_id;
+	private String userPassword;
 	
-	private String user_password;
-	
-	private String login_yn;
-	
-	
-	public UserAccount(String user, String user_password, String login_yn) {
-		this.account_user_id = user;
-		this.user_password = user_password;
-		this.login_yn = login_yn;
+	private String loginYN;
+
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_id")
+	private UserInfo userInfo;
+
+	public void setUserInfo(UserInfo userInfo) {
+		this.userInfo = userInfo;
+		userInfo.setUserAccount(this);
 	}
+
+
+
+	public static UserAccount createUserAccount(String userPassword, UserInfo userInfo) {
+		UserAccount userAccount = new UserAccount();
+		userAccount.userPassword= userPassword;
+		userAccount.setUserInfo(userInfo);
+		return userAccount;
+	}
+
+
 
 }
 
