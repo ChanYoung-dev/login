@@ -1,7 +1,10 @@
 package login.login.Service;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 
+import login.login.Exception.LoginException;
+import login.login.dto.LoginRequestDto;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,5 +30,22 @@ public class UserAccountService {
 		userAccountRepository.save(userAccount);
 	}
 
-	
+
+	@Transactional
+	public UserAccount login(LoginRequestDto dto) {
+		try {
+			UserAccount user = userAccountRepository.findByUserId(dto.getId());
+			if (!(dto.getPassword().equals(user.getUserPassword()))) {
+				throw new LoginException("이메일과 비밀번호가 올바르지 않습니다.");
+			}
+			return user;
+		}
+		catch (NoResultException e){
+			throw new LoginException("이메일과 비밀번호가 올바르지 않습니다.");
+		}
+
+	}
+
+
+
 }

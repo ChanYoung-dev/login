@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Setter
 @Entity
 public class UserAccount {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -20,6 +20,7 @@ public class UserAccount {
 	private String userPassword;
 	
 	private String loginYN;
+
 
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id")
